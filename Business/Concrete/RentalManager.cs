@@ -8,14 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Abstract;
 
 namespace Business.Concrete
 {
 
     public class RentalManager : IRentalService
     {
-        private EfRentalDal _rentalDal;
-        public RentalManager(EfRentalDal rentalDal)
+        private IRentalDal _rentalDal;
+        public RentalManager(IRentalDal rentalDal)
         {
             _rentalDal = rentalDal;
         }

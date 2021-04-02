@@ -7,13 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Abstract;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        private EfUserDal _userDal;
-        public UserManager(EfUserDal userDal)
+        private IUserDal _userDal;
+        public UserManager(IUserDal userDal)
         {
             _userDal = userDal;
         }

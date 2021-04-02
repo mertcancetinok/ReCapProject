@@ -7,13 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Abstract;
 
 namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
-        private EfCustomerDal _customerDal;
-        public CustomerManager(EfCustomerDal customerDal)
+        private ICustomerDal _customerDal;
+        public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
         }
@@ -34,9 +35,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
         }
 
-        public IDataResult<Customer> GetById(int customerId)
+        public IDataResult<Customer> GetById(int userId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == customerId));
+            return new SuccessDataResult<Customer>(_customerDal.Get(c=>c.UserId==userId));
         }
 
         public IResult Update(Customer entity)
