@@ -1,6 +1,7 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 
-namespace DataAccess.CrossCuttingConcerns.FluentValidation
+namespace Core.CrossCuttingConcerns.FluentValidation
 {
     public static class ValidationTool
     {
