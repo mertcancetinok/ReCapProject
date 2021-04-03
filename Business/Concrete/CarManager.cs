@@ -21,14 +21,6 @@ namespace Business.Concrete
         }
         public IResult Add(Car entity)
         {
-            if (entity.Description.Length <= 2)
-            {
-                return new ErrorResult("Araba ismi minumum 2 karakter olmalıdır");
-            }
-            if (entity.DailyPrice <= 0)
-            {
-                return new ErrorResult("Araba günlük fiyatı 0'dan büyük olmalıdır");
-            }
             _carDal.Add(entity);
             return new SuccessResult(Messages.CarAdded);
         }
