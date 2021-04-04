@@ -9,9 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 
 namespace Business.Concrete
 {
+    [ValidationAspect(typeof(CarValidator))]
     public class CarManager : ICarService
     {
         private ICarDal _carDal;
@@ -19,6 +22,7 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+        
         public IResult Add(Car entity)
         {
             _carDal.Add(entity);
