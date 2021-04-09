@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using Entities.Concrete;
+using Core.Entities.Concrete;
 
 namespace WebAPI.Controllers
 {

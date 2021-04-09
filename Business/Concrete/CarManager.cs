@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Business.BusinessAspects.Autofac;
 
 namespace Business.Concrete
 {
@@ -22,7 +23,7 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        
+        [SecuredOperation("product.add,admin")]
         public IResult Add(Car entity)
         {
             _carDal.Add(entity);
