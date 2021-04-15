@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
@@ -22,11 +23,7 @@ namespace Business.Concrete
         }
         public IResult Add(Rental entity)
         {
-            var data = _rentalDal.GetAll();
-            if (data.Any(d => d.ReturnDate > entity.RentDate) && data.Any(i=>i.CarId==entity.CarId))
-            {
-                return new ErrorResult(Messages.CarIsNotReturn);
-            }
+            IResult result = BusinessRules.Run(CheckIfCarIsNotReturn(entity));
             _rentalDal.Add(entity);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -50,6 +47,15 @@ namespace Business.Concrete
         {
             _rentalDal.Update(entity);
             return new SuccessResult(Messages.RentalUpdated);
+        }
+        private IResult CheckIfCarIsNotReturn(Rental entity)
+        {
+            var data = _rentalDal.GetAll();
+            if (data.Any(d => d.ReturnDate > entity.RentDate) && data.Any(i => i.CarId == entity.CarId))
+            {
+                return new ErrorResult(Messages.CarIsNotReturn);
+            }
+            return new SuccessResult();
         }
     }
 }
