@@ -13,6 +13,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Business.BusinessAspects.Autofac;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 
 namespace Business.Concrete
 {
@@ -40,12 +41,14 @@ namespace Business.Concrete
         }
         [SecuredOperation("car.list,admin")]
         [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
         [SecuredOperation("car.list,admin")]
         [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResult<Car> GetById(int carId)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId));
