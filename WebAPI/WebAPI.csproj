@@ -15,7 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CarImages\" />
+    <Folder Include="wwwroot\img\CarImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\CarImages\default.png" />
   </ItemGroup>
 
 </Project>

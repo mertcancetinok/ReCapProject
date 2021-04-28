@@ -22,7 +22,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-OJ7358A\SQLEXPRESS;Initial Catalog=ReCap;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-FTI4HM5;Initial Catalog=ReCap;Integrated Security=True");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Business.Abstract;
+using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Concrete.EntityFramework;
@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Core.Utilities.Business;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -43,7 +44,12 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId));
         }
 
-        public IResult Update(Rental entity)
+    public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+    {
+      return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
+    }
+
+    public IResult Update(Rental entity)
         {
             _rentalDal.Update(entity);
             return new SuccessResult(Messages.RentalUpdated);

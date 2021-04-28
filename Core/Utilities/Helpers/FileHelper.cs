@@ -1,62 +1,49 @@
 ﻿using System;
 using System.IO;
 using Core.Utilities.Results;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-
 namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
+        
+        static string directory = Directory.GetCurrentDirectory() + @"\wwwroot\";
+        static string path = @"img\CarImages\";
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public FileHelper(IWebHostEnvironment hostEnvironment)
+        {
+            webHostEnvironment = hostEnvironment;
+        }
         public static string Add(IFormFile file)
         {
-            
-            if (file != null)
+            string extension = Path.GetExtension(file.FileName).ToUpper();
+            string newFileName = Guid.NewGuid().ToString("N") + extension;
+            if (!Directory.Exists(directory + path))
             {
-                var path = newPath(file);
-
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-                return path;
+                Directory.CreateDirectory(directory + path);
             }
-            return "";
-
-
+            using (FileStream fileStream = File.Create(directory + path + newFileName))
+            {
+                file.CopyTo(fileStream);
+                fileStream.Flush();
+            }
+            return ("https://localhost:44343/" + path + newFileName).Replace("\\", "/");
         }
-        public static IResult Delete(string path)
-        {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception exception)
-            {
-                return new ErrorResult(exception.Message);
-            }
 
-            return new SuccessResult();
-        }
-        public static string Update(string sourcePath, IFormFile file)
+        public static string Update(IFormFile file, string oldImagePath)
         {
-            var result = newPath(file);
-            if (sourcePath.Length > 0)
-            {
-                using (var stream = new FileStream(result, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-            }
-            File.Delete(sourcePath);
-            return result;
+            Delete(oldImagePath);
+            return Add(file);
         }
-        private static string newPath(IFormFile file)
-        {
 
-            var extention = Path.GetExtension(file.FileName);
-            var randomName = string.Format($"{Guid.NewGuid()}{extention}");
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "CarImages\\", randomName);
-            return path;
+        public static void Delete(string imagePath)
+        {
+            if (File.Exists(directory + imagePath.Replace("/", "\\"))
+                && Path.GetFileName(imagePath) != "default.png")
+            {
+                File.Delete(directory + imagePath.Replace("/", "\\"));
+            }
         }
     }
 }
