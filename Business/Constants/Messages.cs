@@ -36,6 +36,10 @@ namespace Business.Constants
         public static string CarImageUpdate = "Resim silindi";
         public static string CarImagesMoreThanFive = "Arabanın resim sayısı 5'ten fazla olamaz";
 
+        public static string CreditCardAdded = "Kredi kartı eklendi";
+        public static string CreditCardDeleted = "Kredi kartı silindi";
+
+
         public static string AccessTokenCreated = "Erişim tokenı oluşturuldu";
         public static string UserAlreadyExists = "Böyle bir kullanıcı var";
         public static string UserNotFound = "Kullanıcı bulunamadı";

@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace Entities.DTOs
     {
         public int CarId { get; set; }
         public string CarName { get; set; }
+        public string CarBanner { get; set; }
         public string BrandName { get; set; }
         public string ColorName { get; set; }
         public string Description { get; set; }
         public double DailyPrice { get; set; }
+        
 
     }
 }

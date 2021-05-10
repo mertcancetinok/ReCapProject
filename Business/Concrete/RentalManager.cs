@@ -25,8 +25,12 @@ namespace Business.Concrete
         public IResult Add(Rental entity)
         {
             IResult result = BusinessRules.Run(CheckIfCarIsNotReturn(entity));
+            if (result != null)
+            {
+                return result;
+            }
             _rentalDal.Add(entity);
-            return new SuccessResult(Messages.RentalAdded);
+            return new SuccessResult(Messages.RentalAdded); 
         }
         public IResult Delete(Rental entity)
         {
@@ -37,6 +41,11 @@ namespace Business.Concrete
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
+        }
+
+        public IDataResult<List<Rental>> GetAllByCarId(int carId)
+        {
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CarId == carId));
         }
 
         public IDataResult<Rental> GetById(int rentalId)
@@ -56,7 +65,7 @@ namespace Business.Concrete
         }
         private IResult CheckIfCarIsNotReturn(Rental entity)
         {
-            var data = _rentalDal.GetAll();
+            var data = _rentalDal.GetAll(c=>c.CarId==entity.CarId);
             if (data.Any(d => d.ReturnDate > entity.RentDate) && data.Any(i => i.CarId == entity.CarId))
             {
                 return new ErrorResult(Messages.CarIsNotReturn);

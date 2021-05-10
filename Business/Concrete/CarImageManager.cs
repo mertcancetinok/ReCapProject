@@ -48,7 +48,7 @@ namespace Business.Concrete
 
         public IResult Update(CarImage entity,IFormFile file)
         {
-            FileHelper.Update(entity.ImagePath,file);
+            FileHelper.Update(file,entity.ImagePath);
             _carImageDal.Update(entity);
             return new SuccessResult(Messages.CarImageUpdate);
         }

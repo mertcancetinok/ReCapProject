@@ -2,18 +2,19 @@
 using Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class Customer:IEntity
+    public class CreditCard:IEntity
     {
-        [Key]
+        public int Id { get; set; }
+        public string CardId { get; set; }
+        public string Cvc { get; set; }
+        public DateTime ExpirationDate { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
-        public string CompanyName { get; set; }
+        public User User{ get; set; }
     }
 }
