@@ -15,6 +15,5 @@ namespace Entities.Concrete
         public string Cvc { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int UserId { get; set; }
-        public User User{ get; set; }
     }
 }

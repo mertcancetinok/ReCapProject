@@ -45,9 +45,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CreditCard>>(_creditCarDal.GetAll());
         }
 
-        public IDataResult<List<CreditCard>> GetAllCardByUser(int id)
+        public IDataResult<CreditCard> GetCardById(string id)
         {
-            return new SuccessDataResult<List<CreditCard>>(_creditCarDal.GetAll(c=>c.UserId==id));
+            return new SuccessDataResult<CreditCard>(_creditCarDal.Get(c=>c.CardId==id));
         }
         public static CreditCard SetTheCard(CreditCard card)
         {
@@ -88,6 +88,11 @@ namespace Business.Concrete
             }
             return new ErrorResult();
             
+        }
+
+        public IDataResult<List<CreditCard>> GetAllCardByUser(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Entities.Concrete
     {
         [Key]
         public int UserId { get; set; }
-        public User User { get; set; }
         public string CompanyName { get; set; }
     }
 }
