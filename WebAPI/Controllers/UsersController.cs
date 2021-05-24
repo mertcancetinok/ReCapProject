@@ -8,6 +8,7 @@ using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -45,6 +46,16 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+        [HttpGet("getbyemail")]
+        public IActionResult GetByEmail(string email)
+        {
+            var result = _userService.GetByEmail(email);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpPost("add")]
         public IActionResult Add(User user)
         {
@@ -57,9 +68,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("update")]
-        public IActionResult Update(User user)
+        public IActionResult Update(UserForUpdateDto userForUpdate)
         {
-            var result = _userService.Update(user);
+            var result = _userService.Update(userForUpdate);
             if (result.Success)
             {
                 return Ok(result);
@@ -70,7 +81,7 @@ namespace WebAPI.Controllers
         [HttpPost("delete")]
         public IActionResult Delete(User user)
         {
-            var result = _userService.Update(user);
+            var result = _userService.Delete(user);
             if (result.Success)
             {
                 return Ok(result);

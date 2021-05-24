@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.Security.Hashing;
+using Business.Constants;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -50,10 +53,50 @@ namespace Business.Concrete
             return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
         }
 
-        public IResult Update(User entity)
+        public IResult Update(UserForUpdateDto userForUpdate)
         {
-            _userDal.Update(entity);
-            return new SuccessResult();
+            if (userForUpdate.NewPassword.Length>0)
+            {
+                if (!HashingHelper.VerifyPasswordHash(userForUpdate.Password, userForUpdate.PasswordHash, userForUpdate.PasswordSalt))
+                {
+                    return new ErrorDataResult<User>(Messages.PasswordError);
+                }
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(userForUpdate.NewPassword, out passwordHash, out passwordSalt);
+                userForUpdate.PasswordHash = passwordHash;
+                userForUpdate.PasswordSalt = passwordSalt;
+                var user = new User
+                {
+                    Id = userForUpdate.Id,
+                    FirstName = userForUpdate.FirstName,
+                    LastName = userForUpdate.LastName,
+                    Email = userForUpdate.Email,
+                    PasswordHash = userForUpdate.PasswordHash,
+                    PasswordSalt = userForUpdate.PasswordSalt
+
+
+                };
+                _userDal.Update(user);
+                return new SuccessResult(Messages.UserUpdated);
+
+            }
+            else
+            {
+                var user = new User
+                {
+                    Id = userForUpdate.Id,
+                    FirstName = userForUpdate.FirstName,
+                    LastName = userForUpdate.LastName,
+                    Email = userForUpdate.Email,
+                    PasswordHash = userForUpdate.PasswordHash,
+                    PasswordSalt = userForUpdate.PasswordSalt
+
+
+                };
+                _userDal.Update(user);
+                return new SuccessResult(Messages.UserUpdated);
+            }
+            
         }
     }
 }

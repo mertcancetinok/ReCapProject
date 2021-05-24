@@ -48,5 +48,7 @@ namespace Business.Constants
         public static string UserRegistered = "Başarıyla kayıt olundu";
 
         public static string AuthorizationDenied = "Erişim yetkisi yok";
+
+        public static string UserUpdated = "Başarıyla güncellendi.Tekrar giriş yapınız";
     }
 }

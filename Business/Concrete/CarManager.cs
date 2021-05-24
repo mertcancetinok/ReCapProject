@@ -25,7 +25,7 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        //[SecuredOperation("car.add,admin")]
+        [SecuredOperation("car.add,admin")]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car entity)
         {
@@ -46,7 +46,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
-        [SecuredOperation("car.list,admin")]
+        //[SecuredOperation("car.list,admin")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public IDataResult<Car> GetById(int carId)
